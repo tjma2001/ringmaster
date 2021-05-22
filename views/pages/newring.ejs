@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head'); %>
+</head>
+
+<body class="container">
+  <header>
+    <%- include('../partials/header'); %>
+  </header>
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <form action="/rings" method="POST">
+          <legend>Create ring</legend>
+          <div class="form-group">
+            <input type="text" name="name" value="" placeholder="ring name"
+              id="name" autofocus="autofocus" class="form-control" />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Create ring</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer>
+      <%- include('../partials/footer'); %>
+    </footer>
+
+  </body>
+
+</html>

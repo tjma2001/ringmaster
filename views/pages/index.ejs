@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../partials/header'); %>
+</header>
+
+<main>
+  <div class="jumbotron">
+    <h1>Ring Master</h1>
+    <p>Welcome to Ringmaster</p>
+  </div>
+  <div><a href="/ring/new">add a ring</a></div>
+  <div>
+    <div>Your Rings:</div>
+    <div>
+      <ul>
+        <% rings.forEach(function(ring) { %>
+          <li><a href="/rings/<%- ring.ringId %>"><%- ring.name %></a></li>
+        <% }); %>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>
