@@ -1,13 +1,14 @@
 const express = require('express');
 const server = express();
+const cors = require('cors');
+
 const DbManager = require('./lib/DbManager');
 const ringRoutes = require('./routes/ring');
 const nodeRoutes = require('./routes/node');
 
 const dbManager = new DbManager();
 
-
-server.set('view engine', 'ejs');
+server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
