@@ -1,5 +1,5 @@
-import AddRing from './AddRing.svelte';
+import * as Ring from './ring';
 
 export {
-  AddRing
+  Ring
 }

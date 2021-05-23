@@ -15,14 +15,15 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const params = req.body;
+  const body = req.body;
+  console.log(req.params);
   try {
-    console.log(params);
-    if (params.name && params.address && params.ringId && params.name.trim().length === 0 && params.address.trim().length === 0 && !isNaN(params.ringId)) {
+    console.log(body);
+    if (body.name && body.address && body.ringId && body.name.trim().length === 0 && body.address.trim().length === 0 && !isNaN(body.ringId)) {
       res.status(400).send({ message: 'Invalid name and address. values required ' });
       return;
     }
-    const result = await dbManager.addNodeToRing(params);
+    const result = await dbManager.addNodeToRing({ ...body, ringId: req.params.ringId });
     res.status(201).send('ok');
   } catch (error) {
     if (error === 'not found') {

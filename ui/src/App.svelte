@@ -1,15 +1,19 @@
 <script lang="ts">
-  import { onMount, tick } from 'svelte';
   import { rings } from './stores/rings';
-  import { AddRing } from './components';
+  import { AddRing } from './components/ring';
+  import Ring from './components/ring/Ring.svelte';
+
+  let selectedRing;
 
   async function handleDeleteRingClick(id: number): Promise<void> {
     const result = await rings.deleteRing(id);
     console.log('result', result);
   }
 
-  function handleAddRingClick(): void {
-    console.log('adding a ring');
+  function handleSelectRingClick(ringId): void {
+    console.log('ringId', ringId);
+    selectedRing = $rings.find((ring) => ring.id === ringId);
+    console.log('selectedRing', selectedRing);
   }
 
   setTimeout(async () => {
@@ -31,17 +35,19 @@
           >
             [delete]
           </div>
-          {ring.name}
+          <div on:click={() => handleSelectRingClick(ring.id)}>
+            {ring.name}
+          </div>
         </div>
       {/each}
     </div>
 
     <AddRing />
-  </diiv>
 
-  <p>
-    <button on:click={handleAddRingClick}>Add ring</button>
-  </p>
+    {#if selectedRing}
+      <Ring ring={selectedRing} />
+    {/if}
+  </diiv>
 </main>
 
 <style>
