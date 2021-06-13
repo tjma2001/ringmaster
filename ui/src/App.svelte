@@ -4,6 +4,7 @@
   import Ring from './components/ring/Ring.svelte';
 
   let selectedRing;
+  let showAddRing = false;
 
   async function handleDeleteRingClick(id: number): Promise<void> {
     const result = await rings.deleteRing(id);
@@ -16,16 +17,29 @@
     console.log('selectedRing', selectedRing);
   }
 
+  function handleToggleShowRing(): void {
+    showAddRing = !showAddRing;
+  }
+
   setTimeout(async () => {
     await rings.getRings();
   }, 1000);
 </script>
 
+<svelte:head>
+  <link href="https://unpkg.com/ace-css/css/ace.min.css" rel="stylesheet" />
+</svelte:head>
+
 <main>
   <h1>Ringmaster</h1>
 
   <diiv class="rings-container">
-    <div>Rings:</div>
+    <div class="header">
+      <div class="title">Rings:</div>
+      <div on:click={() => handleToggleShowRing()} class="link ml2">
+        [{!showAddRing ? 'Add ring' : 'Cancel'}]
+      </div>
+    </div>
     <div class="rings-container">
       {#each $rings as ring}
         <div class="ring-row">
@@ -35,14 +49,19 @@
           >
             [delete]
           </div>
-          <div on:click={() => handleSelectRingClick(ring.id)}>
+          <div
+            on:click={() => handleSelectRingClick(ring.id)}
+            class="ring-name"
+          >
             {ring.name}
           </div>
         </div>
       {/each}
     </div>
 
-    <AddRing />
+    {#if showAddRing}
+      <AddRing on:createdRing={() => (showAddRing = false)} />
+    {/if}
 
     {#if selectedRing}
       <Ring ring={selectedRing} />
@@ -72,11 +91,25 @@
   .clickable:hover {
     color: blue;
   }
-
+  .header {
+    display: flex;
+  }
+  .link {
+    cursor: pointer;
+  }
+  .link:hover {
+    color: blue;
+  }
   .rings-container {
     text-align: left;
   }
-
+  .ring-name {
+    margin-left: 0.25rem;
+    cursor: pointer;
+  }
+  .ring-name:hover {
+    color: blue;
+  }
   .ring-row {
     display: flex;
   }

@@ -9,8 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^3.2.0",
     "axios": "^0.21.1",
     "cors": "^2.8.5",
+    "dayjs": "^1.10.5",
     "express": "^4.17.1",
     "lightning": "^3.3.9",
     "ln-service": "^51.8.2",

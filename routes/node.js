@@ -1,4 +1,6 @@
 const router = require('express').Router({ mergeParams: true });
+const async = require('async');
+const axios = require('axios');
 const DbManager = require('../lib/DbManager');
 
 const dbManager = new DbManager();

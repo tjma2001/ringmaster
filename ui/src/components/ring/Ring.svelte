@@ -48,6 +48,9 @@
     if (result) {
       console.log('result', result);
       nodes = [...(await rings.getRing(ring.id))];
+      showAddNode = false;
+      nodeName = '';
+      nodeAddress = '';
     }
   }
 
@@ -96,7 +99,7 @@
   <div class="title">
     <div>Nodes:</div>
     <div class="link" on:click={addNodeToggle}>[Add node to ring]</div>
-    <div class="link" on:click={generateRing}>[Generate ring}</div>
+    <div class="link" on:click={generateRing}>[Generate ring]</div>
   </div>
 
   <div class="node-container">

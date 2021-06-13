@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import axios from 'axios';
+import async from 'async';
 
 function createRings () {
   const { subscribe, set, update } = writable([]);
@@ -39,9 +40,33 @@ function createRings () {
       console.log('getting rings');
       const rings = await axios.get(`${baseUrl}/rings`);
       console.log('rings', rings.data);
+      
       set(rings.data);
     } catch (error) {
       console.error('could not load rings');
+    }
+  }
+
+  const getRingData = async (nodes) => {
+    // console.log('nodess', nodes);
+    console.log('getting ring data');
+    async function getNodeDetails(node, callback){
+      console.log(arguments);
+      // console.log('nodeDetails', node);
+      const result = await axios.get(`http://localhost:9004/lightning/${node.address}`);
+      // console.log('result.data', result.data);
+
+      return {
+        ...node,
+        metaData: result.data
+      };
+    }
+
+    try {
+      const updatedNodes = await async.map(nodes, getNodeDetails);
+      console.log('node detaiils', updatedNodes);
+    } catch (error) {
+      return nodes;
     }
   }
 
@@ -49,6 +74,8 @@ function createRings () {
     try {
       const result = await axios.get(`${baseUrl}/rings/${ringId}/nodes`);
       console.log('ring id',  ringId, result.data);
+      // await getRingData(result.data);
+
       if(result.status === 200) {
         return result.data;
       }
